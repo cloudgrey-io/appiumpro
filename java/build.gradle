@@ -13,4 +13,5 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
     testCompile group: 'io.appium', name: 'java-client', version: '5.0.4'
     testCompile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.7.0'
+    testCompile group: 'org.hamcrest', name: 'hamcrest-library', version: '1.3'
 }
