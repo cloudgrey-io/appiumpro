@@ -11,7 +11,7 @@ repositories {
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
-    testCompile group: 'io.appium', name: 'java-client', version: '5.0.4'
+    testCompile group: 'io.appium', name: 'java-client', version: '6.0.0-BETA4'
     testCompile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.7.0'
     testCompile group: 'org.hamcrest', name: 'hamcrest-library', version: '1.3'
     testCompile group: 'com.eclipsesource.minimal-json', name: 'minimal-json', version: '0.9.5'
