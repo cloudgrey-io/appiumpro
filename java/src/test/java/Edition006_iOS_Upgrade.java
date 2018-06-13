@@ -32,6 +32,7 @@ public class Edition006_iOS_Upgrade {
     public void testSavedTextAfterUpgrade () throws IOException {
         DesiredCapabilities capabilities = new DesiredCapabilities();
 
+
         capabilities.setCapability("platformName", "iOS");
         capabilities.setCapability("deviceName", "iPhone 7");
         capabilities.setCapability("platformVersion", "11.2");
