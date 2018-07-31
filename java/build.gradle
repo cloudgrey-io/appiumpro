@@ -16,3 +16,8 @@ dependencies {
     testCompile group: 'org.hamcrest', name: 'hamcrest-library', version: '1.3'
     testCompile group: 'com.eclipsesource.minimal-json', name: 'minimal-json', version: '0.9.5'
 }
+
+test {
+    maxParallelForks = 2
+    forkEvery = 1
+}
