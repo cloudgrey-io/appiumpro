@@ -9,7 +9,6 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Base64;
-import javax.annotation.Nullable;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.Test;
