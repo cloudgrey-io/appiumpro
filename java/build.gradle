@@ -15,7 +15,7 @@ dependencies {
     // maven central:
     // testCompile group: 'io.appium', name: 'java-client', version: '6.1.0'
     // jitpack:
-    testCompile group: 'com.github.appium', name: 'java-client', version: '18eba219edf0bf4ab7ddcb17a5268c61d059a74c'
+    testCompile group: 'com.github.appium', name: 'java-client', version: '969fac6a1c6dd229bdefb02ff10e71c812701e0c'
     testCompile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.13.0'
     testCompile group: 'org.hamcrest', name: 'hamcrest-library', version: '1.3'
     testCompile group: 'com.eclipsesource.minimal-json', name: 'minimal-json', version: '0.9.5'
