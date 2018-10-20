@@ -50,7 +50,6 @@ public class Edition039_AI_For_Appium {
     public void testFindElementUsingAI() {
         // find and click on the search button using the classifier
         driver.findElement(search).click();
-        driver.findElementByCu
 
         // prove that the click was successful by locating the 'cancel' button
         wait.until(ExpectedConditions.presenceOfElementLocated(cancel));
