@@ -38,7 +38,7 @@ public class Edition004_Web_Testing {
         capabilities.setCapability("deviceName", "Android Emulator");
         capabilities.setCapability("browserName", "Chrome");
 
-        // Open up Safari
+        // Open up Chrome
         AndroidDriver driver = new AndroidDriver(new URL("http://localhost:4723/wd/hub"), capabilities);
         actualTest(driver);
     }
