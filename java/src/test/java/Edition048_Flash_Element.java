@@ -50,7 +50,7 @@ public class Edition048_Flash_Element {
     }
 
     @Test
-    public void testBackdoor() {
+    public void testFlashElement() {
         WebElement el = wait.until(ExpectedConditions.presenceOfElementLocated(loginScreen));
 
         HashMap<String, Object> scriptArgs = new HashMap<>();
