@@ -59,10 +59,6 @@ public class Edition048_Flash_Element {
         scriptArgs.put("repeatCount", 20);     // how many times should we flash?
 
         driver.executeScript("mobile: flashElement", scriptArgs);
-
-        // mobile: flashElement returns immediately, before the animation is finished, so we have
-        // to make sure we wait a bit in order to see the full animation
-        try { Thread.sleep(2300); } catch (Exception ign) {}
     }
 
 }
