@@ -88,6 +88,6 @@ public class Edition049_Holidays_2018 {
         new Select(driver.findElement(donorCardType)).selectByValue(CARD_TYPE);
         new Select(driver.findElement(donorCardMonth)).selectByValue(CARD_MONTH);
         new Select(driver.findElement(donorCardYear)).selectByValue(CARD_YEAR);
-        driver.findElement(submitDonation);
+        driver.findElement(submitDonation).click();
     }
 }
