@@ -7,14 +7,12 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class Edition051_Android_Backdoor {
 
     private String APP = "https://github.com/cloudgrey-io/the-app/releases/download/v1.8.1/TheApp-v1.8.1.apk";
 
     private AppiumDriver driver;
-    private WebDriverWait wait;
 
     @Before
     public void setUp() throws IOException {
@@ -25,7 +23,6 @@ public class Edition051_Android_Backdoor {
         caps.setCapability("automationName", "Espresso");
         caps.setCapability("app", APP);
         driver = new AppiumDriver(new URL("http://localhost:4723/wd/hub"), caps);
-        wait = new WebDriverWait(driver, 10);
     }
 
     @After
