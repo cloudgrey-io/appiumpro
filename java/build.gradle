@@ -7,16 +7,17 @@ sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
-    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
-    // maven central:
-    // testCompile group: 'io.appium', name: 'java-client', version: '6.1.0'
-    // jitpack:
-    testCompile group: 'com.github.appium', name: 'java-client', version: '969fac6a1c6dd229bdefb02ff10e71c812701e0c'
+    testCompile group: 'io.appium', name: 'java-client', version: '7.0.0'
     testCompile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.13.0'
     testCompile group: 'org.hamcrest', name: 'hamcrest-library', version: '1.3'
     testCompile group: 'com.eclipsesource.minimal-json', name: 'minimal-json', version: '0.9.5'
+}
+
+test {
+    maxParallelForks = 3
+    forkEvery = 1
 }
