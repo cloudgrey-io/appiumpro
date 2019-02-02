@@ -25,6 +25,7 @@ public class Edition053_ADB_Logcat {
         caps.setCapability("deviceName", "Android Emulator");
         caps.setCapability("automationName", "UiAutomator2");
         caps.setCapability("app", APP);
+        caps.setCapability("clearDeviceLogsOnStart", true);
 
         driver = new AppiumDriver(new URL("http://localhost:4723/wd/hub"), caps);
     }
@@ -50,7 +51,7 @@ public class Edition053_ADB_Logcat {
         StreamSupport.stream(logs.spliterator(), false).skip(logs.getAll().size() - 10).forEach(System.out::println);
 
         // wait for more logs
-        try { Thread.sleep(5000); } catch (Exception ign) {} // pause to allow visual verification
+        try { Thread.sleep(5000); } catch (Exception ign) {}
 
         // demonstrate that each time get logs, we only get new logs
         // which were generated since the last time we got logs
