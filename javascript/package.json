@@ -9,8 +9,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "ava": "^1.1.0",
+    "ava": "^1.4.0",
     "bluebird": "^3.5.3",
+    "fs-extra": "^7.0.1",
     "mitmproxy": "^2.1.0",
     "webdriverio": "^5.3.3",
     "websocket-stream": "^5.1.2"

@@ -1,4 +1,7 @@
 let test = require('ava')
+let fs = require('fs-extra')
+let os = require('os')
+let path = require('path')
 let { remote } = require('webdriverio')
 let Mitmproxy = require('mitmproxy').default
 
@@ -34,6 +37,11 @@ test.before(async t => {
     },
     logLevel: 'silent'
   })
+
+  // if the mitmproxy certificate was not installed manually already. Only needs to run once per simulator
+  let certificatePath = path.resolve(os.homedir(), '.mitmproxy', 'mitmproxy-ca-cert.pem')
+  let certificate = await fs.readFile(certificatePath)
+  await driver.executeScript('mobile:installCertificate', [{content: certificate.toString('base64')}])
 })
 
 test('getting the event for a day, via request to history.muffinlabs.com', async t => {
