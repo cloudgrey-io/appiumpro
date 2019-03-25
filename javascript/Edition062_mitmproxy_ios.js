@@ -50,13 +50,10 @@ test('getting the event for a day, via request to history.muffinlabs.com', async
   let button = await driver.$('~learnMore')
   await button.click()
   // wait for alert
-  await driver.waitUntil(function() {
-    return this.getAlertText().then(function(text) {
-        return text;
-    }, function() {
-        return false;
-    });
-  }, 4000)
+  let alertIsPresent = async () => {
+    try { return await driver.getAlertText(); } catch { return false; }
+  }
+  await driver.waitUntil(alertIsPresent, 4000)
   await driver.dismissAlert()
 
   t.true(interceptedMessages.length > 0)

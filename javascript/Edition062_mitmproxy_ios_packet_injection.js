@@ -46,17 +46,17 @@ test(`insert our own event for a day, assert that it's displayed`, async t => {
   await pickerDemo.click()
   let button = await driver.$('~learnMore')
   await button.click()
+
   // wait for alert
-  await driver.waitUntil(function() {
-    return this.getAlertText().then(function(text) {
-        return text;
-    }, function() {
-        return false;
-    });
-  }, 4000)
+  let alertIsPresent = async () => {
+    try { return await driver.getAlertText(); } catch { return false; }
+  }
+  await driver.waitUntil(alertIsPresent, 4000)
+
   let alertText = await driver.getAlertText()
   await driver.dismissAlert()
 
+  // assert that the alertText is the same as the packet we injected
   t.true(/Tests Passed/.test(alertText))
 })
 
