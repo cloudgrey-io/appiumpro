@@ -20,7 +20,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class Edition069_Audio_Capture {
-    private AndroidDriver driver;
+    protected AndroidDriver driver;
 
     @Before
     public void setUp() throws MalformedURLException {
@@ -72,8 +72,8 @@ public class Edition069_Audio_Capture {
         assert(audioCapture.exists());
     }
 
-    private void captureForDuration(File audioCapture, int durationMs) throws Exception {
-        FFmpeg capture = new FFmpeg(audioCapture, 4);
+    protected void captureForDuration(File audioCapture, int durationMs) throws Exception {
+        FFmpeg capture = new FFmpeg(audioCapture, 0);
         Thread t = new Thread(capture);
         t.start();
 
