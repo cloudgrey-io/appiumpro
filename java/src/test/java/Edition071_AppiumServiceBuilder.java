@@ -12,7 +12,7 @@ import java.util.HashMap;
 import static junit.framework.TestCase.assertTrue;
 
 public class Edition071_AppiumServiceBuilder {
-    private String APP = "/Users/jonahss/Workspace/TheApp-v1.9.0.app.zip"; //"https://github.com/cloudgrey-io/the-app/releases/download/v1.9.0/TheApp-v1.9.0.app.zip";
+    private String APP = "https://github.com/cloudgrey-io/the-app/releases/download/v1.9.0/TheApp-v1.9.0.app.zip";
 
     private AppiumDriver driver;
     private static AppiumDriverLocalService server;
