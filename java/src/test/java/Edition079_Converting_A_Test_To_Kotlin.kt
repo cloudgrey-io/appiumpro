@@ -82,6 +82,6 @@ class Edition078_Converting_A_Test_To_Kotlin {
     }
 
     companion object {
-        private var firstTest: Boolean? = true
+        private var firstTest: Boolean = true
     }
 }
