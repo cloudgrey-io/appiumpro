@@ -15,6 +15,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.IOUtils;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.Point;
@@ -74,6 +75,7 @@ public class Edition081_Image_Based_Testing_With_Different_DPI {
         capabilities.setCapability("appPackage", "com.rovio.angrybirds");
         capabilities.setCapability("appActivity", "com.rovio.fusion.App");
         capabilities.setCapability("appWaitActivity", "com.rovio.fusion.App");
+        capabilities.setCapability("orientation", "LANDSCAPE");
      //   capabilities.setCapability("fixImageTemplateScale", true);
      //   capabilities.setCapability("mjpegScreenshotUrl", "http://localhost:8080/stream.mjpeg");
 
@@ -92,16 +94,19 @@ public class Edition081_Image_Based_Testing_With_Different_DPI {
     }
 
     @Test
-    public void testPigDestruction() throws URISyntaxException, IOException {
+    public void testPigDestruction() throws URISyntaxException, IOException, InterruptedException {
+        Thread.sleep(10000);
         TestUtil.TapImage("queryimages/checkmark.png", driver);
 
+        Thread.sleep(7000);
         int[] birdLocation = TestUtil.FindImage("queryimages/red-bird-in-slingshot.png", driver);
         shootBird(driver, birdLocation, -280, 140);
 
         // takes a while to sum up the scores and win
         driver.manage().timeouts().implicitlyWait(25, TimeUnit.SECONDS);
 
-        TestUtil.FindImage("queryimages/level-cleared-three-stars.png", driver);
+        Thread.sleep(25000);
+        Assert.assertTrue(TestUtil.FindImage("queryimages/level-cleared-three-stars.png", driver)[0] > 0);
     }
 
 }

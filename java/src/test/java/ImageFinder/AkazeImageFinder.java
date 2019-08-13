@@ -29,7 +29,7 @@ public class AkazeImageFinder {
         String originalPath = System.getProperty("java.library.path");
         String currentPath = Paths.get("").toAbsolutePath().toString();
       //  System.setProperty("java.library.path", originalPath + System.getProperty("path.separator") + currentPath + "/opencv-3.0.0/");
-        System.setProperty("java.library.path", "/usr/local/Cellar/opencv/4.1.0_2/share/java/opencv4/");
+        System.setProperty("java.library.path", "/usr/local/Cellar/opencv@3/3.4.5_2/share/OpenCV/java/");
 
         Field fieldSysPath = null;
         try {
@@ -45,7 +45,7 @@ public class AkazeImageFinder {
         }
 
         //System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-        System.loadLibrary("opencv_java410");
+        System.loadLibrary("opencv_java345");
         opencv_setup = true;
     }
 

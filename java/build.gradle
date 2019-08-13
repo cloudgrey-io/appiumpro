@@ -21,7 +21,7 @@ dependencies {
     testImplementation group: 'me.xdrop', name: 'fuzzywuzzy', version: '1.2.0'
     testCompile group: 'io.appium', name: 'mitmproxy-java', version: '1.6.1'
     //testCompile files('opencv-3.0.0/opencv-300.jar')
-    testCompile files('/usr/local/Cellar/opencv/4.1.0_2/share/java/opencv4/opencv-410.jar')
+    testCompile files('/usr/local/Cellar/opencv@3/3.4.5_2/share/OpenCV/java/opencv-345.jar')
     testCompile group: 'org.testng', name: 'testng', version: '6.14.3' // remove later
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 }
