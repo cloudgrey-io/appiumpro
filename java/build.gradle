@@ -20,6 +20,9 @@ dependencies {
     testImplementation group: 'org.zeroturnaround', name: 'zt-exec', version: '1.10'
     testImplementation group: 'me.xdrop', name: 'fuzzywuzzy', version: '1.2.0'
     testCompile group: 'io.appium', name: 'mitmproxy-java', version: '1.6.1'
+    //testCompile files('opencv-3.0.0/opencv-300.jar')
+    testCompile files('/usr/local/Cellar/opencv/4.1.0_2/share/java/opencv4/opencv-410.jar')
+    testCompile group: 'org.testng', name: 'testng', version: '6.14.3' // remove later
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 }
 
@@ -45,4 +48,50 @@ compileTestKotlin {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+}
+
+
+//source: https://stackoverflow.com/a/52398377
+task marshallClasspathDeps(type: Copy) {
+    from sourceSets.test.runtimeClasspath
+    // if you need this from the dependencies in the build.gradle then it should be :
+    // from sourceSets.main.runtimeClasspath
+    include '**/*.class'
+    include '**/*.jar'
+    exclude { FileTreeElement details ->
+        details.file.name.contains('Edition') && !details.file.name.contains('Edition081')
+    }
+    into 'build/libs/dependency-jars'
+}
+
+task marshallOpencvFiles(type: Copy) {
+    from file('.')
+    include 'opencv-3.0.0/**'
+    into 'build/libs'
+}
+
+task marshallImageResources(type: Copy) {
+    from file('.')
+    include 'queryimages/**'
+    into 'build/libs'
+}
+
+//packaging tests task which is generated from sample using gradle init
+task packageTests(type: Jar) {
+    from (sourceSets.test.output) {
+        include '**/Edition081*'
+        include '**/ImageFinder/*'
+    }
+    classifier = 'tests'
+    includeEmptyDirs = false
+}
+
+//create zip archive
+//source: https://stackoverflow.com/a/36883221/8016330
+task zip(type: Zip) {
+    dependsOn packageTests,marshallClasspathDeps,marshallOpencvFiles,marshallImageResources
+    from 'build/libs/'
+    include '*'
+    include '*/*' //to include contents of a folder present inside dependency-jars directory
+    archiveName 'zip-with-dependencies.zip'
 }

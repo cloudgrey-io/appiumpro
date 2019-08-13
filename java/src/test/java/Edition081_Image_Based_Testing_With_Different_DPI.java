@@ -1,8 +1,8 @@
+import ImageFinder.TestUtil;
 import io.appium.java_client.Setting;
 import io.appium.java_client.android.AndroidDriver;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
@@ -12,6 +12,8 @@ import java.time.Duration;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.concurrent.TimeUnit;
+
+import org.apache.commons.io.IOUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -31,14 +33,11 @@ public class Edition081_Image_Based_Testing_With_Different_DPI {
 
     private AndroidDriver driver;
 
-    private Path getResource(String fileName) throws URISyntaxException {
-        URL refImgUrl = getClass().getClassLoader().getResource(fileName);
-        return Paths.get(refImgUrl.toURI()).toFile().toPath();
-    }
-
     private String getReferenceImageB64(String fileName) throws URISyntaxException, IOException {
-        Path refImgPath = getResource("Edition081_" + fileName);
-        return Base64.getEncoder().encodeToString(Files.readAllBytes(refImgPath));
+        InputStream in = getClass().getResourceAsStream("Edition081_" + fileName);
+        byte[] bytes = IOUtils.toByteArray(in);
+
+        return Base64.getEncoder().encodeToString(bytes);
     }
 
     private Integer getDPI(AndroidDriver driver) {
@@ -48,9 +47,8 @@ public class Edition081_Image_Based_Testing_With_Different_DPI {
         return dpi;
     }
 
-    private void shootBird(AndroidDriver driver, WebElement birdEl, int xOffset, int yOffset) {
-        Rectangle rect = birdEl.getRect();
-        Point start = new Point(rect.x + rect.width / 2, rect.y + rect.height / 2);
+    private void shootBird(AndroidDriver driver, int[] birdLocation, int xOffset, int yOffset) {
+        Point start = new Point(birdLocation[0], birdLocation[1]);
         Point end = start.moveBy(xOffset, yOffset);
         Duration dragDuration = Duration.ofMillis(500);
 
@@ -65,15 +63,16 @@ public class Edition081_Image_Based_Testing_With_Different_DPI {
 
     @Before
     public void setUp() throws URISyntaxException, IOException {
-        File classpathRoot = new File(System.getProperty("user.dir"));
-        File appDir = new File(classpathRoot, "../apps/");
-        String app = new File(appDir.getCanonicalPath(), "Angry_Birds_Classic_v8.0.3_apkpure.com.apk").getAbsolutePath();
+//        File classpathRoot = new File(System.getProperty("user.dir"));
+//        File appDir = new File(classpathRoot, "../apps/");
+//        String app = new File(appDir.getCanonicalPath(), "Angry_Birds_Classic_v8.0.3_apkpure.com.apk").getAbsolutePath();
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("platformName", "Android");
         capabilities.setCapability("deviceName", "Android Emulator");
         capabilities.setCapability("automationName", "UiAutomator2");
-        capabilities.setCapability("app", app);
+        capabilities.setCapability("appPackage", "com.rovio.angrybirds");
+        capabilities.setCapability("appActivity", "com.rovio.fusion.App");
         capabilities.setCapability("appWaitActivity", "com.rovio.fusion.App");
      //   capabilities.setCapability("fixImageTemplateScale", true);
      //   capabilities.setCapability("mjpegScreenshotUrl", "http://localhost:8080/stream.mjpeg");
@@ -94,21 +93,15 @@ public class Edition081_Image_Based_Testing_With_Different_DPI {
 
     @Test
     public void testPigDestruction() throws URISyntaxException, IOException {
-        String checkmark = getReferenceImageB64("checkmark.png");
-        String bird = getReferenceImageB64("red-bird-in-slingshot.png");
-        String victory = getReferenceImageB64("level-cleared-three-stars.png");
+        TestUtil.TapImage("queryimages/checkmark.png", driver);
 
-        driver.setSetting(Setting.IMAGE_MATCH_THRESHOLD, 0.5);
-
-        driver.findElementByImage(checkmark).click();
-
-        WebElement birdEl = driver.findElementByImage(bird);
-        shootBird(driver, birdEl, -280, 140);
+        int[] birdLocation = TestUtil.FindImage("queryimages/red-bird-in-slingshot.png", driver);
+        shootBird(driver, birdLocation, -280, 140);
 
         // takes a while to sum up the scores and win
         driver.manage().timeouts().implicitlyWait(25, TimeUnit.SECONDS);
 
-        driver.findElementByImage(victory);
+        TestUtil.FindImage("queryimages/level-cleared-three-stars.png", driver);
     }
 
 }
