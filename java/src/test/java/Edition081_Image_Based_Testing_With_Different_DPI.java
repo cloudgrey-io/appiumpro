@@ -18,9 +18,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.Point;
-import org.openqa.selenium.Rectangle;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.PointerInput;
 import org.openqa.selenium.interactions.PointerInput.Kind;
 import org.openqa.selenium.interactions.PointerInput.MouseButton;
@@ -95,10 +93,12 @@ public class Edition081_Image_Based_Testing_With_Different_DPI {
 
     @Test
     public void testPigDestruction() throws URISyntaxException, IOException, InterruptedException {
-        Thread.sleep(10000);
+        Thread.sleep(11000);
         TestUtil.TapImage("queryimages/checkmark.png", driver);
 
         Thread.sleep(7000);
+        File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+        Thread.sleep(2000);
         int[] birdLocation = TestUtil.FindImage("queryimages/red-bird-in-slingshot.png", driver);
         shootBird(driver, birdLocation, -280, 140);
 

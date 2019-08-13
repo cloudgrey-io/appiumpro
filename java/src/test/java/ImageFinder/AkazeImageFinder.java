@@ -28,8 +28,8 @@ public class AkazeImageFinder {
 
         String originalPath = System.getProperty("java.library.path");
         String currentPath = Paths.get("").toAbsolutePath().toString();
-      //  System.setProperty("java.library.path", originalPath + System.getProperty("path.separator") + currentPath + "/opencv-3.0.0/");
-        System.setProperty("java.library.path", "/usr/local/Cellar/opencv@3/3.4.5_2/share/OpenCV/java/");
+        System.setProperty("java.library.path", originalPath + System.getProperty("path.separator") + currentPath + "/opencv-3.0.0/");
+      //  System.setProperty("java.library.path", "/usr/local/Cellar/opencv@3/3.4.5_2/share/OpenCV/java/");
 
         Field fieldSysPath = null;
         try {
@@ -44,8 +44,8 @@ public class AkazeImageFinder {
             e.printStackTrace();
         }
 
-        //System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-        System.loadLibrary("opencv_java345");
+        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+        //System.loadLibrary("opencv_java345");
         opencv_setup = true;
     }
 
@@ -112,15 +112,15 @@ public class AkazeImageFinder {
         Mat scene_corners = CVUtility.computeSceneCorners(query.img, queryInlierList, sceneInlierList);
 
         //draw matches to img
-        Mat colorQueryImg = Imgcodecs.imread(queryImagePath, Imgcodecs.CV_LOAD_IMAGE_COLOR);
-        Mat colorSceneImg = Imgcodecs.imread(sceneImagePath, Imgcodecs.CV_LOAD_IMAGE_COLOR);
+        //Mat colorQueryImg = Imgcodecs.imread(queryImagePath, Imgcodecs.CV_LOAD_IMAGE_COLOR);
+        //Mat colorSceneImg = Imgcodecs.imread(sceneImagePath, Imgcodecs.CV_LOAD_IMAGE_COLOR);
 
-        Mat resultImg = CVUtility.drawMatchesResult(colorQueryImg, colorSceneImg, queryInlierList, sceneInlierList, scene_corners);
-        String resultFilename = queryImagePath + "_query_result.png";
-        Imgcodecs.imwrite(resultFilename, resultImg);
+        //Mat resultImg = CVUtility.drawMatchesResult(colorQueryImg, colorSceneImg, queryInlierList, sceneInlierList, scene_corners);
+        //String resultFilename = queryImagePath + "_query_result.png";
+        //Imgcodecs.imwrite(resultFilename, resultImg);
 
-        String screenshotDirectory = System.getProperty("appium.screenshots.dir", System.getProperty("java.io.tmpdir", ""));
-        Imgcodecs.imwrite(new File(screenshotDirectory, new File(resultFilename).getName()).getAbsolutePath(), resultImg);
+        //String screenshotDirectory = System.getProperty("appium.screenshots.dir", System.getProperty("java.io.tmpdir", ""));
+        //Imgcodecs.imwrite(new File(screenshotDirectory, new File(resultFilename).getName()).getAbsolutePath(), resultImg);
 
         //compute rotate      
         Point top_left = new Point(scene_corners.get(0, 0));
