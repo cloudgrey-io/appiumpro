@@ -27,7 +27,7 @@ import static junit.framework.TestCase.assertTrue;
 
 public class Edition082_Mjpeg_Video_Streaming_iOS {
 
-    private String IOS_APP = "/Users/jonahss/Workspace/TheApp-v1.9.0.app.zip";//https://github.com/cloudgrey-io/the-app/releases/download/v1.6.1/TheApp-v1.6.1.app.zip"; // in order to download, you may need to install the mitmproxy certificate on your operating system first. Or download the app and replace this capability with the path to your app.
+    private String IOS_APP = "https://github.com/cloudgrey-io/the-app/releases/download/v1.9.0/TheApp-v1.9.0.app.zip"; // in order to download, you may need to install the mitmproxy certificate on your operating system first. Or download the app and replace this capability with the path to your app.
 
     private IOSDriver driver;
 
@@ -36,37 +36,9 @@ public class Edition082_Mjpeg_Video_Streaming_iOS {
         driver.quit();
     }
 
-    @Test
-    public void streamIosSimulatorVideo() throws IOException, URISyntaxException, InterruptedException, ExecutionException, TimeoutException {
-
-        DesiredCapabilities caps = new DesiredCapabilities();
-        caps.setCapability("platformName", "iOS");
-        caps.setCapability("platformVersion", "12.4");
-        caps.setCapability("deviceName", "iPhone Xs");
-        caps.setCapability("automationName", "XCUITest");
-        caps.setCapability("app", IOS_APP);
-
-        caps.setCapability("newCommandTimeout", "0");
-
-        driver = new IOSDriver(new URL("http://0.0.0.0:4723/wd/hub"), caps);
-
-        driver.startRecordingScreen();
-
-        // now open a web browser on your computer pointed to http://localhost:9100 to watch a live stream of this test run.
-
-        for (int i = 0; i < 100; i++) {
-            WebElement list = driver.findElementByAccessibilityId("List Demo");
-            list.click();
-            Thread.sleep(1000);
-            WebElement back = driver.findElementByAccessibilityId("The App");
-            back.click();
-            Thread.sleep(1000);
-        }
-    }
 
     @Test
     public void timeScreenshotsWithDefaultBehavior() throws IOException, URISyntaxException, InterruptedException, ExecutionException, TimeoutException {
-
         DesiredCapabilities caps = new DesiredCapabilities();
         caps.setCapability("platformName", "iOS");
         caps.setCapability("platformVersion", "12.4");
