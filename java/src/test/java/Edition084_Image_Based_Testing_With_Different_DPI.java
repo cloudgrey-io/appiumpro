@@ -28,16 +28,9 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 
 import static java.util.Optional.ofNullable;
 
-public class Edition081_Image_Based_Testing_With_Different_DPI {
+public class Edition084_Image_Based_Testing_With_Different_DPI {
 
     private AndroidDriver driver;
-
-    private String getReferenceImageB64(String fileName) throws URISyntaxException, IOException {
-        InputStream in = getClass().getResourceAsStream("Edition081_" + fileName);
-        byte[] bytes = IOUtils.toByteArray(in);
-
-        return Base64.getEncoder().encodeToString(bytes);
-    }
 
     private Integer getDPI(AndroidDriver driver) {
         Object dpiObject = driver.getSessionDetail("deviceScreenDensity");

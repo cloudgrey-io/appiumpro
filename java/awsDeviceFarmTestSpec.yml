@@ -13,9 +13,15 @@ phases:
       - uname -pm
       - cat /etc/os-release
       - curl http://169.254.169.254/latest/meta-data/instance-type
-      - export APPIUM_VERSION=1.14.0
+      - export APPIUM_VERSION=1.12.1
+      - nvm install v10.16.2 --install-latest-npm
+      - cd $DEVICEFARM_TEST_PACKAGE_PATH
+      - curl "https://aws-devicefarm-support.s3-us-west-2.amazonaws.com/appium_version_v$APPIUM_VERSION".zip -o appium_prebuilt.zip
+      - unzip appium_prebuilt.zip
+      - mkdir -p /usr/local/avm/versions/$APPIUM_VERSION/node_modules
+      - ln -s $DEVICEFARM_TEST_PACKAGE_PATH/appium/build/lib/main.js $DEVICEFARM_TEST_PACKAGE_PATH/appium/bin/appium.js
+      - ln -s $DEVICEFARM_TEST_PACKAGE_PATH/appium /usr/local/avm/versions/$APPIUM_VERSION/node_modules/appium
       - avm $APPIUM_VERSION
-      - ln -s /usr/local/avm/versions/$APPIUM_VERSION/node_modules/.bin/appium  /usr/local/avm/versions/$APPIUM_VERSION/node_modules/appium/bin/appium.js
 
   # The pre-test phase includes commands that setup your test environment.
   pre_test:

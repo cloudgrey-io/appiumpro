@@ -59,7 +59,7 @@ task marshallClasspathDeps(type: Copy) {
     include '**/*.class'
     include '**/*.jar'
     exclude { FileTreeElement details ->
-        details.file.name.contains('Edition') && !details.file.name.contains('Edition081')
+        details.file.name.contains('Edition') && !details.file.name.contains('Edition084')
     }
     into 'build/libs/dependency-jars'
 }
@@ -79,7 +79,7 @@ task marshallImageResources(type: Copy) {
 //packaging tests task which is generated from sample using gradle init
 task packageTests(type: Jar) {
     from (sourceSets.test.output) {
-        include '**/Edition081*'
+        include '**/Edition084*'
         include '**/ImageFinder/*'
     }
     classifier = 'tests'
