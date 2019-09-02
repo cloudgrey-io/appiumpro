@@ -1,9 +1,6 @@
 import io.appium.java_client.android.AndroidDriver;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeoutException;
 import org.junit.After;
 import org.junit.Test;
 import org.openqa.selenium.OutputType;
