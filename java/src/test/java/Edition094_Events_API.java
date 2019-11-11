@@ -1,5 +1,6 @@
 import io.appium.java_client.MobileBy;
 import io.appium.java_client.ios.IOSDriver;
+import io.appium.java_client.serverevents.CustomEvent;
 import io.appium.java_client.serverevents.ServerEvents;
 import java.io.File;
 import java.io.IOException;
@@ -39,7 +40,10 @@ public class Edition094_Events_API {
     @After
     public void tearDown() throws IOException {
         if (driver != null) {
-            driver.logEvent("theapp", "testEnd");
+            CustomEvent evt = new CustomEvent();
+            evt.setVendor("theApp");
+            evt.setEventName("testEnd");
+            driver.logEvent(evt);
             ServerEvents events = driver.getEvents();
             events.save(new File("/Users/jlipps/Desktop/java.json").toPath());
             driver.quit();
@@ -51,13 +55,17 @@ public class Edition094_Events_API {
         WebDriverWait wait = new WebDriverWait(driver, 5);
 
         wait.until(ExpectedConditions.presenceOfElementLocated(loginScreen)).click();
-        driver.logEvent("theapp", "onLoginScreen");
+        CustomEvent evt = new CustomEvent();
+        evt.setVendor("theApp");
+        evt.setEventName("onLoginScreen");
+        driver.logEvent(evt);
         String AUTH_USER = "alice";
         wait.until(ExpectedConditions.presenceOfElementLocated(username)).sendKeys(AUTH_USER);
         String AUTH_PASS = "wrongpassword";
         wait.until(ExpectedConditions.presenceOfElementLocated(password)).sendKeys(AUTH_PASS);
         wait.until(ExpectedConditions.presenceOfElementLocated(loginBtn)).click();
         wait.until(ExpectedConditions.presenceOfElementLocated(loggedIn));
-        driver.logEvent("theapp", "loggedIn");
+        evt.setEventName("loggedIn");
+        driver.logEvent(evt);
     }
 }
