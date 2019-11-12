@@ -3,7 +3,6 @@ import com.google.common.collect.ImmutableMap;
 import io.appium.java_client.MobileBy;
 import io.appium.java_client.android.AndroidDriver;
 import java.net.URL;
-import java.util.Map;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -49,11 +48,11 @@ public class Edition095_Android_Datamatcher {
     public void testFindHiddenListItemWithDatamatcher() {
         wait.until(ExpectedConditions.presenceOfElementLocated(MobileBy.AccessibilityId("Views"))).click();
         WebElement list = wait.until(ExpectedConditions.presenceOfElementLocated(MobileBy.className("android.widget.ListView")));
-        Map<String, Object> dataMatcher = ImmutableMap.of(
+        String selector = new Json().toJson(ImmutableMap.of(
             "name", "hasEntry",
             "args", ImmutableList.of("title", "Layouts")
-        );
-        list.findElement(MobileBy.androidDataMatcher(new Json().toJson(dataMatcher))).click();
+        ));
+        list.findElement(MobileBy.androidDataMatcher(selector)).click();
         wait.until(ExpectedConditions.presenceOfElementLocated(MobileBy.AccessibilityId("Baseline")));
     }
 }
