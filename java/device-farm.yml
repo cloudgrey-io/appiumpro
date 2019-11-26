@@ -1,0 +1,84 @@
+version: 0.1
+
+# Phases are collection of commands that get executed on Device Farm.
+phases:
+  # The install phase includes commands that install dependencies that your tests use.
+  # Default dependencies for testing frameworks supported on Device Farm are already installed.
+  install:
+    commands:
+      # By default, Appium server version used is 1.7.2.
+      # You can switch to an alternate supported version from 1.6.5, 1.7.1, 1.7.2, 1.8.0 or 1.8.1 by using a command like "avm 1.7.1"
+      # OR
+      # To install a newer version of Appium use the following commands:
+      - export APPIUM_VERSION=1.16.0
+      - export AVM_DIR=/usr/local/avm/versions/$APPIUM_VERSION
+      - nvm install v10.16.2 --install-latest-npm
+      - mkdir -p $AVM_DIR
+      - cd $AVM_DIR
+      - npm install appium@beta
+      - ln -s $AVM_DIR/node_modules/appium/build/lib/main.js $AVM_DIR/node_modules/appium/bin/appium.js
+      - ln -s $AVM_DIR/node_modules/appium $DEVICEFARM_TEST_PACKAGE_PATH/appium
+      - avm $APPIUM_VERSION
+
+  # The pre-test phase includes commands that setup your test environment.
+  pre_test:
+    commands:
+      # We recommend starting appium server process in the background using the command below.
+      # Appium server log will go to $DEVICEFARM_LOG_DIR directory.
+      # The environment variables below will be auto-populated during run time.
+      - echo "Start appium server"
+      - appium --log-timestamp --device-name $DEVICEFARM_DEVICE_NAME
+        --platform-name $DEVICEFARM_DEVICE_PLATFORM_NAME --app $DEVICEFARM_APP_PATH
+        --udid $DEVICEFARM_DEVICE_UDID --chromedriver-executable $DEVICEFARM_CHROMEDRIVER_EXECUTABLE  >> $DEVICEFARM_LOG_DIR/appiumlog.txt 2>&1 &
+
+      - start_appium_timeout=0;
+        while [ true ];
+        do
+            if [ $start_appium_timeout -gt 60 ];
+            then
+                echo "appium server never started in 60 seconds. Exiting";
+                exit 1;
+            fi;
+            grep -i "Appium REST http interface listener started on 0.0.0.0:4723" $DEVICEFARM_LOG_DIR/appiumlog.txt >> /dev/null 2>&1;
+            if [ $? -eq 0 ];
+            then
+                echo "Appium REST http interface listener started on 0.0.0.0:4723";
+                break;
+            else
+                echo "Waiting for appium server to start. Sleeping for 1 second";
+                sleep 1;
+                start_appium_timeout=$((start_appium_timeout+1));
+            fi;
+        done;
+
+  # The test phase includes commands that start your test suite execution.
+  test:
+    commands:
+      # Setup environment variables for java
+      - export CLASSPATH=$CLASSPATH:$DEVICEFARM_TESTNG_JAR
+      - export CLASSPATH=$CLASSPATH:$DEVICEFARM_TEST_PACKAGE_PATH/*
+      - export CLASSPATH=$CLASSPATH:$DEVICEFARM_TEST_PACKAGE_PATH/dependency-jars/*
+      # Your test package is downloaded in $DEVICEFARM_TEST_PACKAGE_PATH so we first change directory to that path.
+      - echo "Navigate to test package directory"
+      - cd $DEVICEFARM_TEST_PACKAGE_PATH
+      - du -d 3
+
+      # By default, the following command is used by Device Farm to run your Appium JUnit test.
+      # Note : DeviceFarm is using the TestNG runner to run the jUnit tests.
+      # The goal is to run to your tests jar file with all the dependencies jars in the CLASSPATH.
+      # Alternatively, You may specify your customized command.
+      # Note: For most use cases, the default command works fine.
+      # Please refer "http://testng.org/doc/documentation-main.html#junit" for more options on running JUnit tests using TestNG runner from the command line.
+      - echo "Start Appium JUnit test"
+      - java -Dappium.screenshots.dir=$DEVICEFARM_SCREENSHOT_PATH org.testng.TestNG -junit -testjar *-tests.jar -d $DEVICEFARM_LOG_DIR/test-output -verbose 10
+
+  # The post test phase includes are commands that are run after your tests are executed.
+  post_test:
+    commands:
+
+# The artifacts phase lets you specify the location where your tests logs, device logs will be stored.
+# And also let you specify the location of your test logs and artifacts which you want to be collected by Device Farm.
+# These logs and artifacts will be available through ListArtifacts API in Device Farm.
+artifacts:
+  # By default, Device Farm will collect your artifacts from following directories
+  - $DEVICEFARM_LOG_DIR

@@ -5,6 +5,7 @@ apply plugin: 'java'
 apply plugin: 'kotlin'
 
 sourceCompatibility = 1.8
+kotlin_version = '1.3.41'
 
 repositories {
     maven { url "https://jitpack.io" }
@@ -12,22 +13,23 @@ repositories {
 }
 
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
-    testCompile group: 'com.github.appium', name: 'java-client', version: 'fcf8581be05c4d67d76a5522dbfa1df9a9b07474'
-    testCompile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.13.0'
-    testCompile group: 'org.hamcrest', name: 'hamcrest-library', version: '1.3'
-    testCompile group: 'com.eclipsesource.minimal-json', name: 'minimal-json', version: '0.9.5'
-    testCompile group: 'org.java-websocket', name: 'Java-WebSocket', version: '1.3.9'
+    testImplementation group: 'junit', name: 'junit', version: '4.12'
+    testImplementation group: 'io.appium', name: 'java-client', version: '7.3.0'
+    testImplementation group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.13.0'
+    testImplementation group: 'org.hamcrest', name: 'hamcrest-library', version: '1.3'
+    testImplementation group: 'com.eclipsesource.minimal-json', name: 'minimal-json', version: '0.9.5'
+    testImplementation group: 'org.java-websocket', name: 'Java-WebSocket', version: '1.3.9'
     testImplementation group: 'org.zeroturnaround', name: 'zt-exec', version: '1.10'
     testImplementation group: 'me.xdrop', name: 'fuzzywuzzy', version: '1.2.0'
-    testCompile group: 'io.appium', name: 'mitmproxy-java', version: '1.6.1'
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    testImplementation group: 'io.appium', name: 'mitmproxy-java', version: '1.6.1'
+    testImplementation group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib-jdk8', version: "$kotlin_version"
 }
 
 test {
     maxParallelForks = 3
     forkEvery = 1
 }
+
 buildscript {
     ext.kotlin_version = '1.3.41'
     repositories {
@@ -37,13 +39,48 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
+
 compileKotlin {
     kotlinOptions {
         jvmTarget = "1.8"
     }
 }
+
 compileTestKotlin {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+}
+
+// for getting jar for aws
+// source: https://stackoverflow.com/a/52398377
+task marshallClasspathDeps(type: Copy) {
+    from sourceSets.test.runtimeClasspath
+    // if you need this from the dependencies in the build.gradle then it should be :
+    // from sourceSets.main.runtimeClasspath
+    include '**/*.class'
+    include '**/*.jar'
+    exclude { FileTreeElement details ->
+        details.file.name.contains('Edition') || details.file.name.contains('kotlin')
+    }
+    into 'build/libs/dependency-jars'
+}
+
+//packaging tests task which is generated from sample using gradle init
+task packageTests(type: Jar) {
+    from (sourceSets.test.output) {
+        include '**/*DeviceFarm*'
+    }
+    classifier = 'tests'
+    includeEmptyDirs = false
+}
+
+// create zip archive
+// source: https://stackoverflow.com/a/36883221/8016330
+task zip(type: Zip) {
+    dependsOn packageTests, marshallClasspathDeps
+    from 'build/libs/'
+    include '*'
+    include '*/*' //to include contents of a folder present inside dependency-jars directory
+    archiveName 'zip-with-dependencies.zip'
 }
