@@ -1,4 +1,9 @@
+.vim
 java/.gradle
+java/.classpath
+java/.project
+java/.settings
+java/bin
 java/build/
 
 # Ignore Gradle GUI config

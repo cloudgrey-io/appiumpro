@@ -26,6 +26,7 @@ dependencies {
 }
 
 test {
+    useJUnit()
     maxParallelForks = 3
     forkEvery = 1
 }
@@ -83,9 +84,4 @@ task zip(type: Zip) {
     include '*'
     include '*/*' //to include contents of a folder present inside dependency-jars directory
     archiveName 'zip-with-dependencies.zip'
-}
-
-task writeClasspath << {
-    buildDir.mkdirs()
-    new File(buildDir, "classpath.txt").text = sourceSets.test.runtimeClasspath.asPath + ":" + sourceSets.main.runtimeClasspath.asPath + "\n"
 }
