@@ -30,7 +30,7 @@ public class Edition098_Visual_Testing_1 {
     private final static By LOGIN_SCREEN = MobileBy.AccessibilityId("Login Screen");
     private final static By USERNAME_FIELD = MobileBy.AccessibilityId("username");
 
-    private AndroidDriver driver;
+    private AndroidDriver<WebElement> driver;
 
     @Before
     public void setUp() throws Exception {
@@ -42,7 +42,7 @@ public class Edition098_Visual_Testing_1 {
         // make sure we uninstall the app before each test regardless of version
         capabilities.setCapability("uninstallOtherPackages", "io.cloudgrey.the_app");
         URL server = new URL("http://localhost:4723/wd/hub");
-        driver = new AndroidDriver(server, capabilities);
+        driver = new AndroidDriver<>(server, capabilities);
     }
 
     @After
