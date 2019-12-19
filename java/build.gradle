@@ -24,6 +24,8 @@ dependencies {
     testImplementation group: 'io.appium', name: 'mitmproxy-java', version: '1.6.1'
     testImplementation group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib-jdk8', version: "$kotlin_version"
     testImplementation group: 'com.applitools', name: 'eyes-appium-java4', version: '4.2.1'
+    testImplementation group: 'com.github.testdotai', name: 'classifier-client-java', version: '1.0.0'
+    testImplementation group: 'com.google.guava', name: 'guava', version: '28.1-jre'
 }
 
 test {
