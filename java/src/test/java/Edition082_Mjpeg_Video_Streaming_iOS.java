@@ -1,28 +1,15 @@
-import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.android.AndroidElement;
-import io.appium.java_client.android.AndroidStartScreenRecordingOptions;
-import io.appium.java_client.ios.IOSDriver;
-import io.appium.java_client.screenrecording.CanRecordScreen;
-import org.junit.After;
-import org.junit.Test;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.*;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeoutException;
 
-import static junit.framework.TestCase.assertTrue;
+import org.junit.After;
+import org.junit.Test;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.remote.DesiredCapabilities;
+
+import io.appium.java_client.ios.IOSDriver;
 
 
 public class Edition082_Mjpeg_Video_Streaming_iOS {
