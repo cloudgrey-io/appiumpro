@@ -39,8 +39,16 @@ public class Edition106_Android_Notifications {
         List<Map<String, Object>> notifications = (List<Map<String, Object>>)res.get("statusBarNotifications");
         for (Map<String, Object> notification : notifications) {
             Map<String, String> innerNotification = (Map<String, String>)notification.get("notification");
-            System.out.println(innerNotification.get("bigTitle"));
-            System.out.println(innerNotification.get("bigText"));
+            if (innerNotification.get("bigTitle") != null) {
+                System.out.println(innerNotification.get("bigTitle"));
+            } else {
+                System.out.println(innerNotification.get("title"));
+            }
+            if (innerNotification.get("bigText") != null) {
+                System.out.println(innerNotification.get("bigText"));
+            } else {
+                System.out.println(innerNotification.get("text"));
+            }
         }
     }
 }
