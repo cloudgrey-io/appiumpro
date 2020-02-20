@@ -2,6 +2,8 @@
 import java.io.IOException;
 import java.net.URL;
 
+import com.google.common.collect.ImmutableMap;
+
 import org.junit.After;
 import org.junit.Test;
 import org.openqa.selenium.OutputType;
@@ -29,14 +31,11 @@ public class Edition105_Video_Streaming_Android {
         caps.setCapability("automationName", "UiAutomator2");
         caps.setCapability("app", ANDROID_APP);
         if (useMjpeg) {
-            caps.setCapability("mjpegScreenshotUrl", "http://localhost:8093/stream.mjpeg");
+            caps.setCapability("autoScreenStream", true);
+            caps.setCapability("mjpegScreenshotUrl", "http://localhost:8093");
         }
 
         driver = new AndroidDriver<WebElement>(new URL("http://0.0.0.0:4723/wd/hub"), caps);
-
-        if (useMjpeg) {
-            driver.executeScript("mobile: startScreenStreaming");
-        }
 
         long startTime = System.nanoTime();
         for (int i = 0; i < 100; i++) {
@@ -46,18 +45,15 @@ public class Edition105_Video_Streaming_Android {
 
         long msElapsed = (endTime - startTime) / 1000000;
 
-        if (useMjpeg) {
-            driver.executeScript("mobile: stopScreenStreaming");
-        }
         return msElapsed;
     }
 
-    @Test
-    public void timeScreenshotsWithDefaultBehavior() throws IOException {
-        long msElapsed = timeScreenshots(false);
-        System.out.println("100 screenshots normally: " + msElapsed + "ms. On average " + msElapsed/100 + "ms per screenshot");
-        // about 305ms per screenshot on my machine
-    }
+    //@Test
+    //public void timeScreenshotsWithDefaultBehavior() throws IOException {
+        //long msElapsed = timeScreenshots(false);
+        //System.out.println("100 screenshots normally: " + msElapsed + "ms. On average " + msElapsed/100 + "ms per screenshot");
+        //// about 305ms per screenshot on my machine
+    //}
 
     @Test
     public void timeScreenshotsWithMjpegScreenshotBehavior() throws IOException {
