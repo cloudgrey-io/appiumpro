@@ -71,6 +71,7 @@ abstract public class Edition107_Base {
             duration = Duration.ZERO;
         }
         swipe.addAction(input.createPointerMove(duration, Origin.viewport(), end.x, end.y));
+        swipe.addAction(input.createPointerUp(MouseButton.LEFT.asArg()));
         d.perform(ImmutableList.of(swipe));
     }
 
