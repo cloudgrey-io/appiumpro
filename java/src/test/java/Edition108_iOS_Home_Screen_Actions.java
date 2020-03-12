@@ -47,8 +47,9 @@ public class Edition108_iOS_Home_Screen_Actions {
         WebDriverWait wait = new WebDriverWait(driver, 10);
 
         // press home button twice to make sure we are on the page with reminders
-        driver.executeScript("mobile: pressButton", ImmutableMap.of("name", "home"));
-        driver.executeScript("mobile: pressButton", ImmutableMap.of("name", "home"));
+        ImmutableMap<String, String> pressHome = ImmutableMap.of("name", "home");
+        driver.executeScript("mobile: pressButton", pressHome);
+        driver.executeScript("mobile: pressButton", pressHome);
 
         // find the reminders icon and long-press it
         WebElement homeIcon = wait.until(ExpectedConditions.presenceOfElementLocated(REMINDER_ICON));
