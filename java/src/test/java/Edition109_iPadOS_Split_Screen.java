@@ -53,10 +53,6 @@ public class Edition109_iPadOS_Split_Screen {
         }
     }
 
-    protected By getTaskIcon(String name) {
-        return By.xpath("//*[@name='Multitasking Dock']//*[@name='" + name + "']");
-    }
-
     protected void swipe(Point start, Point end, Duration swipeDur, Duration holdDur) {
         PointerInput input = new PointerInput(Kind.TOUCH, "finger1");
         Sequence swipe = new Sequence(input, 0);
@@ -95,8 +91,9 @@ public class Edition109_iPadOS_Split_Screen {
     }
 
     protected Rectangle getDockIconRect(String appName) {
+        By iconLocator = By.xpath("//*[@name='Multitasking Dock']//*[@name='" + appName + "']");
         WebElement icon = wait.until(
-            ExpectedConditions.presenceOfElementLocated(getTaskIcon(appName)));
+            ExpectedConditions.presenceOfElementLocated(iconLocator));
         return icon.getRect();
     }
 
