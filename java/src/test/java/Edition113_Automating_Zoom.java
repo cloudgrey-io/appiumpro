@@ -13,17 +13,17 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import io.appium.java_client.android.AndroidDriver;
 
 public class Edition113_Automating_Zoom {
-    private AndroidDriver<WebElement> driver;
-    private WebDriverWait wait;
-    private static final String MEETING_ID = System.getenv("ZOOM_MEETING_ID");
-    private static final String MEETING_PW = System.getenv("ZOOM_MEETING_PW");
+    protected AndroidDriver<WebElement> driver;
+    protected WebDriverWait wait;
+    protected static final String MEETING_ID = System.getenv("ZOOM_MEETING_ID");
+    protected static final String MEETING_PW = System.getenv("ZOOM_MEETING_PW");
 
-    private By JOIN_MEETING_BUTTON = By.id("btnJoinConf");
-    private By MEETING_ID_FIELD = By.id("edtConfNumber");
-    private By ACTUALLY_JOIN_MEETING_BUTTON = By.id("btnJoin");
-    private By PASSWORD_FIELD = By.id("edtPassword");
-    private By PASSWORD_OK_BUTTON = By.id("button1");
-    private By LEAVE_BTN = By.id("btnLeave");
+    protected By JOIN_MEETING_BUTTON = By.id("btnJoinConf");
+    protected By MEETING_ID_FIELD = By.id("edtConfNumber");
+    protected By ACTUALLY_JOIN_MEETING_BUTTON = By.id("btnJoin");
+    protected By PASSWORD_FIELD = By.id("edtPassword");
+    protected By PASSWORD_OK_BUTTON = By.id("button1");
+    protected By LEAVE_BTN = By.id("btnLeave");
 
     @Before
     public void setUp() throws MalformedURLException {
@@ -44,12 +44,12 @@ public class Edition113_Automating_Zoom {
         }
     }
 
-    private WebElement waitFor(By locator) {
+    protected WebElement waitFor(By locator) {
         return wait.until(ExpectedConditions.presenceOfElementLocated(locator));
     }
 
     @Test
-    public void testJoinMeeting() {
+    public void testJoinMeeting() throws Exception {
         // navigate through the UI to join a meeting with correct meeting id and password
         waitFor(JOIN_MEETING_BUTTON).click();
         waitFor(MEETING_ID_FIELD).sendKeys(MEETING_ID);
