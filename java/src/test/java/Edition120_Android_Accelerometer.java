@@ -1,7 +1,6 @@
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 
 import org.junit.After;
@@ -13,7 +12,6 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import io.appium.java_client.MobileBy;
 import io.appium.java_client.android.AndroidDriver;
 
 public class Edition120_Android_Accelerometer {
@@ -25,7 +23,7 @@ public class Edition120_Android_Accelerometer {
         DesiredCapabilities caps = new DesiredCapabilities();
         caps.setCapability("platformName", "Android");
         caps.setCapability("deviceName", "Android");
-        caps.setCapability("app", "/Users/jlipps/Code/testapps/vibration.apk");
+        caps.setCapability("app", "/Users/jlipps/Code/testapps/vibration.apk"); // REPLACE WITH PATH TO YOUR OWN APP
         caps.setCapability("automationName", "UiAutomator2");
         driver = new AndroidDriver<>(new URL("http://localhost:4723/wd/hub"), caps);
         wait = new WebDriverWait(driver, 10);
